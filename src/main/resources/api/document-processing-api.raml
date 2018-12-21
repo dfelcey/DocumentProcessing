@@ -1,0 +1,46 @@
+#%RAML 1.0
+version: v1
+title: Document Processing API
+
+traits:
+   client-id-required:
+    headers:
+      client_id:
+        type: string
+      client_secret:
+        type: string
+types:
+  ProcessingStatus:
+    properties: 
+      status: 
+        enum: [ submitted, processing, completed, failed ]
+
+/docuement:
+  post:
+    is: [ client-id-required ]
+    queryParameters:
+      emailAddress:
+        type: string
+        required: true
+      filePath:
+        type: string
+        required: true
+      keywords:
+        description: A ',' seperated list of words of phrases to match
+        required: true
+        type: string
+    responses: 
+      201:
+        description: Document submitted
+        body: 
+          application/json:
+            type: ProcessingStatus
+            example: { "status": "submitted"}
+  get:
+    is: [ client-id-required ]
+    responses: 
+      200:
+        body: 
+          application/json:
+            type: ProcessingStatus
+            example: { "status": "completed" }

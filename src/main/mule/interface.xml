@@ -8,9 +8,8 @@
         <file:connection workingDir="/Users/dfelcey" />
     </file:config>
     <flow name="document-processing-api-main">
-        <http:listener config-ref="HTTP_Listener_config" path="/api/*">
-            <http:response statusCode="#[vars.httpStatus default 200]">
-            </http:response>
+        <http:listener config-ref="HTTP_Listener_config" path="${secure::http.path}">
+            <http:response statusCode="#[vars.httpStatus default 200]" />
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[payload]]]></http:body>
             </http:error-response>
@@ -124,7 +123,7 @@ output application/json
             </on-error-propagate>
         </error-handler>
     </flow>
-    <flow name="post:\docuement:multipart\form-data:document-processing-api-config">
+    <flow name="post:\docuement:multipart\form-data:document-processing-api-config-bkup">
         <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" doc:id="210aa56a-735a-4a06-b320-c9a9e5522cc2">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
@@ -138,8 +137,20 @@ output application/java
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>
-		<flow-ref doc:name="Flow Reference" doc:id="1d7f3122-d790-48a8-98c0-8ca95bd440f3" name="implementationFlow" />
-		<ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" doc:id="18615aa0-0769-436e-aa69-f543704520da">
+        <flow-ref doc:name="Flow Reference" doc:id="1d7f3122-d790-48a8-98c0-8ca95bd440f3" name="implementationFlow" />
+        <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" doc:id="18615aa0-0769-436e-aa69-f543704520da">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  status: "submitted"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\docuement:multipart\form-data:document-processing-api-config">
+        <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json

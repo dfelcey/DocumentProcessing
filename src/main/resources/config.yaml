@@ -1,8 +1,8 @@
 http:
   port: "![lQchelXWi0A=]"
   host: "![4hUzB55NXH0=]"
+  path: "![WfC8Ikf4l5U=]"
   base_path: "![Vxf6VG2CgMI=]"
-  path: "![Vxf6VG2CgMI=]"
 ocr_service:
   host: "![xO5s/+kE5XFOE5rn7EHMzJwTBeVslL1R3hKG30SXx0E=]"
   port: "![lQchelXWi0A=]"

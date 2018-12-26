@@ -1,4 +1,5 @@
 #%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/3050395c-80ed-4b05-9356-52c7285553ff # 
 version: v1
 title: Document Processing API
 
@@ -24,6 +25,8 @@ traits:
           emailAddress:
             description: The email address of the submitter
             required: true
+            type: string
+            pattern: ^.+@.+\..+$
           keywords:
             description: A ',' seperated list of words of phrases to match
             required: true

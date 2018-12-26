@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
-	xmlns:http="http://www.mulesoft.org/schema/mule/http"
-	xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:salesforce-case-attachement-api="http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:online-ocrapi="http://www.mulesoft.org/schema/mule/online-ocrapi"
+	xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
 http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
-http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd">
-	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e89ba86b-d643-45c5-9d8f-e28e28816ec8" basePath="${http.base_path}" >
-		<http:listener-connection host="${http.host}" port="${http.port}" />
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
+http://www.mulesoft.org/schema/mule/online-ocrapi http://www.mulesoft.org/schema/mule/online-ocrapi/current/mule-online-ocrapi.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api/current/mule-salesforce-case-attachement-api.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e89ba86b-d643-45c5-9d8f-e28e28816ec8" basePath="${secure::http.base_path}" >
+		<http:listener-connection host="${secure::http.host}" port="${secure::http.port}" />
 	</http:listener-config>
-	<os:object-store name="Object_store" doc:name="Object store" doc:id="14e576aa-f280-4da6-9773-03680a3d033f" />
-	<configuration-properties doc:name="Configuration properties" doc:id="924583f9-e0f7-432c-a0c5-8ee0cc66ff02" file="config.yaml" />
+	<online-ocrapi:config name="Online_OCR_API_Config" doc:name="Online OCR API Config" doc:id="05c2cc45-07fb-4aa7-8dbe-49ca4812d9b9" property_host="${secure::ocr_service.host}" property_port="${secure::ocr_service.port}" property_protocol="${secure::ocr_service.protocol}" property_basePath="${secure::ocr_service.basp_path}" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="ef001b78-83b7-4d93-ae30-4aa87b6a83cd" file="config.yaml" key="${config.key}" >
+		<secure-properties:encrypt algorithm="Blowfish" />
+	</secure-properties:config>
+	<salesforce-case-attachement-api:config name="Salesforce_Case_Attachement_API_Config" doc:name="Salesforce Case Attachement API Config" doc:id="4cdb3241-af85-47ea-bd2b-62ef7dc0142c" property_host="${secure::sfdc_service.host}" property_port="${secure::sfdc_service.port}" property_protocol="${secure::sfdc_service.protocol}" property_basePath="${secure::sfdc_service.base_path}" />
 	</mule>

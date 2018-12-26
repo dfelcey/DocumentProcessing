@@ -1,4 +1,19 @@
-http:
-  host: "0.0.0.0"
-  port: "8083"
-  base_path: "/"
+http_listener:
+  port: "![lQchelXWi0A=]"
+  host: "![4hUzB55NXH0=]"
+  base_path: "![Vxf6VG2CgMI=]"
+  path: "![Vxf6VG2CgMI=]"
+ocr_service:
+  host: "![xO5s/+kE5XFOE5rn7EHMzJwTBeVslL1R3hKG30SXx0E=]"
+  port: "![lQchelXWi0A=]"
+  protocol: "![YrXeZI0vhSo=]"
+  base_path: "![fB+PP71ZnnM=]"
+  client_id: "![YWtGwZrxWvIuLaz2+JUWlcP3ZEEk8YUELoprrFddvojX8gvPHqSVnQ==]"
+  client_secret: "![FRb4/M3xHhzG6fLSe1gn9y7qpWZ5YT2B69CjOeVJkooM11zariPa8g==]"
+sfdc_service:
+  host: "![Xec7/Wyu6F0CU5lQGfra/7atAcw/t+V0lrjkQp+Sf+HlYmLGYZcERA==]"
+  port: "![lQchelXWi0A=]"
+  protocol: "![YrXeZI0vhSo=]"
+  base_path: "![fB+PP71ZnnM=]"
+  client_id: "![gtRa1q7tcGOonorg8INsowxq2w9RlEYmOHs4jS7hDTujgDu08EpxOA==]"
+  client_secret: "![5p3hHf5gmSim3qAuPGfenolo5TQCoPNEiBVETIdO4F9fSNGAT8nmYQ==]"

@@ -9,38 +9,28 @@ traits:
         type: string
       client_secret:
         type: string
-types:
-  ProcessingStatus:
-    properties: 
-      status: 
-        enum: [ submitted, processing, completed, failed ]
 
 /docuement:
   post:
     is: [ client-id-required ]
-    queryParameters:
-      emailAddress:
-        type: string
-        required: true
-      filePath:
-        type: string
-        required: true
-      keywords:
-        description: A ',' seperated list of words of phrases to match
-        required: true
-        type: string
+    body:
+      multipart/form-data:
+        properties: 
+          file1: 
+            description: The file to translate to text 
+            required: true 
+            type: file 
+            fileTypes: [ 'image/jpeg']   
+          emailAddress:
+            description: The email address of the submitter
+            required: true
+          keywords:
+            description: A ',' seperated list of words of phrases to match
+            required: true
+            type: string
     responses: 
       201:
         description: Document submitted
         body: 
           application/json:
-            type: ProcessingStatus
             example: { "status": "submitted"}
-  get:
-    is: [ client-id-required ]
-    responses: 
-      200:
-        body: 
-          application/json:
-            type: ProcessingStatus
-            example: { "status": "completed" }

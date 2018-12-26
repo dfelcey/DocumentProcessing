@@ -8,13 +8,11 @@
         <file:connection workingDir="/Users/dfelcey" />
     </file:config>
     <flow name="document-processing-api-main">
-        <http:listener config-ref="document-processing-api-httpListenerConfig" path="/api/*">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
-                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
             </http:response>
             <http:error-response statusCode="#[vars.httpStatus default 500]">
-                <http:body>#[payload]</http:body>
-                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+                <http:body><![CDATA[#[payload]]]></http:body>
             </http:error-response>
         </http:listener>
         <apikit:router config-ref="document-processing-api-config" />

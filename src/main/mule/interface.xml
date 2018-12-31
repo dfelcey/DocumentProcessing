@@ -127,7 +127,9 @@ output application/java
 	fileContents: payload.parts.file1.content as Binary,
 	keywords: payload.parts.keywords.content as String,
 	contentType: payload.parts.file1.headers.'Content-Type' as String,
-	emailAddress: payload.parts.emailAddress.content as String
+	emailAddress: payload.parts.emailAddress.content as String,
+	fileName: payload.parts.file1.headers.'Content-Disposition'.filename as String,
+	language: payload.parts.language.content as String
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>
@@ -142,5 +144,10 @@ output application/json
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="f6861894-2648-46c0-bb8a-d34aa75a5ad1" >
+				<logger level="INFO" doc:name="Logger" doc:id="c4970b39-6d31-4434-b2db-b7b0968ad28b" message="Error: #[error.description], Payload: #[payload]"/>
+			</on-error-propagate>
+		</error-handler>
     </flow>
 </mule>

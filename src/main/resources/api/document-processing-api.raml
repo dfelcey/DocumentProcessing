@@ -21,16 +21,20 @@ traits:
             description: The file to translate to text 
             required: true 
             type: file 
-            fileTypes: [ 'image/jpeg']   
+            fileTypes: [ 'image/jpeg']              
           emailAddress:
             description: The email address of the submitter
             required: true
             type: string
             pattern: ^.+@.+\..+$
           keywords:
-            description: A ',' seperated list of words of phrases to match
-            required: true
+            description: "A ',' seperated list of words of phrases to match"
             type: string
+            required: true
+          language:
+            description: The language code for the file - ISO 639-1 Language Codes
+            required: true
+            enum: [ 'en' ]
     responses: 
       201:
         description: Document submitted

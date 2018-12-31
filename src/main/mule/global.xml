@@ -15,7 +15,7 @@ http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api http://www.m
 		<http:listener-connection host="${secure::http.host}" port="${secure::http.port}" />
 	</http:listener-config>
 	<online-ocrapi:config name="Online_OCR_API_Config" doc:name="Online OCR API Config" doc:id="05c2cc45-07fb-4aa7-8dbe-49ca4812d9b9" property_host="${secure::ocr_service.host}" property_port="${secure::ocr_service.port}" property_protocol="${secure::ocr_service.protocol}" property_basePath="${secure::ocr_service.base_path}" />
-	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="ef001b78-83b7-4d93-ae30-4aa87b6a83cd" file="config.yaml" key="${config.key}" >
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="ef001b78-83b7-4d93-ae30-4aa87b6a83cd" file="config.yaml" key="MuleS0ft" >
 		<secure-properties:encrypt algorithm="Blowfish" />
 	</secure-properties:config>
 	<salesforce-case-attachement-api:config name="Salesforce_Case_Attachement_API_Config" doc:name="Salesforce Case Attachement API Config" doc:id="4cdb3241-af85-47ea-bd2b-62ef7dc0142c" property_host="${secure::sfdc_service.host}" property_port="${secure::sfdc_service.port}" property_protocol="${secure::sfdc_service.protocol}" property_basePath="${secure::sfdc_service.base_path}" />

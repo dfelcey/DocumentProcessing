@@ -29,18 +29,4 @@ type docValueJson = {|
       </types:input-event>
     </types:processor-declaration>
   </types:enrichment>
-  <types:enrichment select="#cbebb419-8d8f-4619-a1bf-efe432ae8ba1">
-    <types:processor-declaration>
-      <types:input-event>
-        <types:message>
-          <types:payload type="docValueJson"/>
-        </types:message>
-      </types:input-event>
-      <types:output-event>
-        <types:message>
-          <types:payload type="onlineOCRXML"/>
-        </types:message>
-      </types:output-event>
-    </types:processor-declaration>
-  </types:enrichment>
 </types:mule>

@@ -128,7 +128,7 @@ output application/java
 	keywords: payload.parts.keywords.content as String,
 	contentType: payload.parts.file1.headers.'Content-Type' as String,
 	emailAddress: payload.parts.emailAddress.content as String,
-	fileName: payload.parts.file1.headers.'Content-Disposition'.filename as String,
+	filename: payload.parts.file1.headers.'Content-Disposition'.filename as String,
 	language: payload.parts.language.content as String
 }]]></ee:set-payload>
             </ee:message>

@@ -41,13 +41,13 @@ import * from dw::core::Binaries
 			</ee:message>
 		</ee:transform>
 		<online-ocrapi:create-translate doc:name="Translate Document" doc:id="71d07bb1-b5b4-4bf4-abd0-da63bddf34ab" config-ref="Online_OCR_API_Config" client-id="${secure::ocr_service.client_id}" client-secret="${secure::ocr_service.client_secret}"/>
-		<set-variable value="#[payload.text.lower]" doc:name="Set Variable" doc:id="9a62c5dc-b79f-444c-aa46-469830cb2b6e" variableName="text" />
+		<set-variable value="#[lower(payload.text)]" doc:name="Set Variable" doc:id="9a62c5dc-b79f-444c-aa46-469830cb2b6e" variableName="text" />
 		<scripting:execute engine="groovy" doc:name="Match keywords against text" doc:id="e111d0b0-1efe-4cfd-8993-c19408e1c41b" >
-			<scripting:code >@Grapes(
-    @Grab('org.apache.commons:commons-lang3:3.5')
-)
+			<scripting:code >@Grab('org.apache.commons:commons-lang3:3.5')
+@Grab('org.apache.ivy:ivy:2.1.0')
 
 import static org.apache.commons.lang3.StringUtils.getJaroWinklerDistance
+
 
 // Check inputs
 if(text == null || text.trim().isEmpty() || keywords == null || keywords.trim().isEmpty()){

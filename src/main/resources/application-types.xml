@@ -8,10 +8,10 @@ type docValueJson = {|
   keywords: String, 
   contentType: String, 
   emailAddress: String, 
-  fileName: String, 
+  filename: String, 
   language: String
 |} {"MetadataFormat": "json",
-"example": "{\"fileContents\":\"\",\"keywords\":\"applicaton, child\",\"contentType\":\"image\/jpeg\",\"emailAddress\":\"fred.bloggs@gmail.com\",\"fileName\":\"benefit.jpg\",\"language\":\"en\"}"}
+"example": "{\"fileContents\":\"\",\"keywords\":\"applicaton, child\",\"contentType\":\"image\/jpeg\",\"emailAddress\":\"fred.bloggs@gmail.com\",\"filename\":\"benefit.jpg\",\"language\":\"en\"}"}
 
 ]]></types:shape>
     </types:type>
@@ -29,4 +29,5 @@ type docValueJson = {|
       </types:input-event>
     </types:processor-declaration>
   </types:enrichment>
+  <types:enrichment select="#98d69d3d-2aa8-4ca9-901a-381dbc5784c8"/>
 </types:mule>

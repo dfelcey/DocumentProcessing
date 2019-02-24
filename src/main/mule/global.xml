@@ -22,5 +22,5 @@ http://www.mulesoft.org/schema/mule/salesforce-case-attachment-api http://www.mu
 	</secure-properties:config>
 	<global-property doc:name="Global Property" doc:id="e57b9738-9ab8-4134-b567-574b16793d35" name="defaultResponseTimeout" value="30000" />
 	<api-gateway:autodiscovery apiId="15599917" doc:name="API Autodiscovery" doc:id="68eb7e57-6bdf-4e52-ab07-073c51cdc18b" flowRef="document-processing-api-main"/>
-	<salesforce-case-attachment-api:config name="Salesforce_Case_Attachment_API_Config" doc:name="Salesforce Case Attachment API Config" doc:id="0801b156-5540-480f-84e6-1a436542f8ce" property_host="${secure::ocr_service.host}" property_port="${secure::ocr_service.port}" property_protocol="${secure::ocr_service.protocol}" property_basePath="${secure::ocr_service.base_path}" />
+	<salesforce-case-attachment-api:config name="Salesforce_Case_Attachment_API_Config" doc:name="Salesforce Case Attachment API Config" doc:id="0801b156-5540-480f-84e6-1a436542f8ce" property_host="${secure::sfdc_service.host}" property_port="${secure::sfdc_service.port}" property_protocol="${secure::sfdc_service.protocol}" property_basePath="${secure::sfdc_service.base_path}" />
 	</mule>

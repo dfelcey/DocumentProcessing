@@ -122,12 +122,13 @@ output application/json
 output application/java
 ---
 {	
-	fileContents: payload.parts.file1.content as Binary,
+	fileContents: payload.parts.file1.content,
 	keywords: payload.parts.keywords.content as String,
 	contentType: payload.parts.contentType.content as String,
 	emailAddress: payload.parts.emailAddress.content as String,
 	filename: payload.parts.filename.content as String,
-	language: payload.parts.language.content as String
+	language: payload.parts.language.content as String,
+	fileEncoding: payload.parts.fileEncoding.content as String
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>

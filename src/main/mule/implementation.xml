@@ -31,10 +31,15 @@ import * from dw::core::Binaries
 ---
 {
 	ns0#root: {
-		ns0#file1: toBase64(vars.docValues.fileContents),
+		ns0#file1: 
+			if (vars.docValues.fileEncoding == 'binary')
+				toBase64(vars.docValues.fileContents)
+			else
+				vars.docValues.fileContents
+		,
 		ns0#language: vars.docValues.language,
 		ns0#contentType: vars.docValues.contentType,
-		ns0#contentTransferEncoding: 'base64',
+		ns0#contentTransferEncoding: vars.docValues.fileEncoding,
 		ns0#filename: vars.docValues.filename
 	}
 }]]></ee:set-payload>

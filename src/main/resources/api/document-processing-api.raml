@@ -1,5 +1,4 @@
 #%RAML 1.0
-baseUri: https://mocksvc.mulesoft.com/mocks/3050395c-80ed-4b05-9356-52c7285553ff # 
 version: v1
 title: Document Processing API
 
@@ -43,9 +42,19 @@ traits:
             description: The name of the document
             required: true
             type: string
+          fileEncoding:
+            description: The encoding type for the file
+            enum: ['binary','base64']
+            required: true
+
     responses: 
       201:
         description: Document submitted
         body: 
           application/json:
             example: { "status": "submitted"}
+      204:
+        description: Document not submitted
+        body: 
+          application/json:
+            example: { "status": "no action"}

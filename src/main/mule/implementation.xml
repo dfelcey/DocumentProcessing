@@ -85,12 +85,43 @@ boundary="3453563653"
 					</ee:message>
 				</ee:transform>
 				<salesforce-case-attachement-api:create-attachment doc:name="Create attachment" doc:id="2d189da7-d473-4762-b194-9e7b756bb416" config-ref="Salesforce_Case_Attachement_API_Config" client-id="${secure::sfdc_service.client_id}" client-secret="${secure::sfdc_service.client_secret}"/>
+				<ee:transform doc:name="Transform Message" doc:id="71388b58-817b-4edf-a7e6-61cf7e8b05b6" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{ 
+	"status": "submitted"
+}]]></ee:set-payload>
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="httpStatus" ><![CDATA[%dw 2.0
+output application/java
+---
+vars.statusCode]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
 			</when>
 			<otherwise >
 				<logger level="INFO" doc:name="Logger" doc:id="d70ba45d-dc92-4c5d-af7a-8f90c2d70478" message="#[payload]"/>
+				<ee:transform doc:name="Transform Message" doc:id="0a2a7e23-1fc0-4447-86e3-8e7ab31a2686" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{ 
+	"status": "no action"
+}]]></ee:set-payload>
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="httpStatus" ><![CDATA[%dw 2.0
+output application/java
+---
+204]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
 			</otherwise>
 		</choice>
-		<set-payload value="#[true as Boolean]" doc:name="Set Payload" doc:id="a925ec13-d0e1-4931-b935-7185b961f01a" />
 		<error-handler >
 			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="08d93f89-6310-4ad1-9f20-2bddcadc6db7" >
 				<logger level="INFO" doc:name="Logger" doc:id="03c6dff9-2ce5-47ef-be8b-2db0e453c6c6" message="Error: #[error.description], Payload: #[payload]"/>

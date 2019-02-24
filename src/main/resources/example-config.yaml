@@ -1,0 +1,19 @@
+http:
+  port: "8081"
+  host: "0.0.0.0"
+  path: "/"
+  base_path: "/"
+ocr_service:
+  host: "ocr.host.com"
+  port: "443"
+  protocol: "HTTPS"
+  base_path: "/"
+  client_id: "xyz"
+  client_secret: "xyz"
+sfdc_service:
+  host: "salesforce.com"
+  port: "443"
+  protocol: "HTTPS"
+  base_path: "/"
+  client_id: "xyz"
+  client_secret: "xyz"

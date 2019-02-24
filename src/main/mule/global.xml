@@ -19,4 +19,5 @@ http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api http://www.m
 		<secure-properties:encrypt algorithm="Blowfish" />
 	</secure-properties:config>
 	<salesforce-case-attachement-api:config name="Salesforce_Case_Attachement_API_Config" doc:name="Salesforce Case Attachement API Config" doc:id="4cdb3241-af85-47ea-bd2b-62ef7dc0142c" property_host="${secure::sfdc_service.host}" property_port="${secure::sfdc_service.port}" property_protocol="${secure::sfdc_service.protocol}" property_basePath="${secure::sfdc_service.base_path}" />
+	<global-property doc:name="Global Property" doc:id="e57b9738-9ab8-4134-b567-574b16793d35" name="defaultResponseTimeout" value="30000" />
 	</mule>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:salesforce-case-attachement-api="http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
-	xmlns:online-ocrapi="http://www.mulesoft.org/schema/mule/online-ocrapi"
-	xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:salesforce-case-attachement-api="http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:online-ocrapi="http://www.mulesoft.org/schema/mule/online-ocrapi" xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
 http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
@@ -10,7 +10,8 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
 http://www.mulesoft.org/schema/mule/online-ocrapi http://www.mulesoft.org/schema/mule/online-ocrapi/current/mule-online-ocrapi.xsd
 http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
-http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api/current/mule-salesforce-case-attachement-api.xsd">
+http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api/current/mule-salesforce-case-attachement-api.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e89ba86b-d643-45c5-9d8f-e28e28816ec8">
 		<http:listener-connection host="${secure::http.host}" port="8083" />
 	</http:listener-config>
@@ -20,4 +21,5 @@ http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api http://www.m
 	</secure-properties:config>
 	<salesforce-case-attachement-api:config name="Salesforce_Case_Attachement_API_Config" doc:name="Salesforce Case Attachement API Config" doc:id="4cdb3241-af85-47ea-bd2b-62ef7dc0142c" property_host="${secure::sfdc_service.host}" property_port="${secure::sfdc_service.port}" property_protocol="${secure::sfdc_service.protocol}" property_basePath="${secure::sfdc_service.base_path}" />
 	<global-property doc:name="Global Property" doc:id="e57b9738-9ab8-4134-b567-574b16793d35" name="defaultResponseTimeout" value="30000" />
+	<api-gateway:autodiscovery apiId="15599917" doc:name="API Autodiscovery" doc:id="68eb7e57-6bdf-4e52-ab07-073c51cdc18b" flowRef="document-processing-api-main"/>
 	</mule>

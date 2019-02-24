@@ -82,20 +82,28 @@ import * from dw::core::Binaries
 					</ee:message>
 				</ee:transform>
 				<salesforce-case-attachment-api:create-attachment doc:name="Create attachment" doc:id="ad846307-67e5-4e3f-89da-2a9a19375aa8" config-ref="Salesforce_Case_Attachment_API_Config" client-id="${secure::sfdc_service.client_id}" client-secret="${secure::sfdc_service.client_secret}"/>
-				<ee:transform doc:name="Transform Message" doc:id="71388b58-817b-4edf-a7e6-61cf7e8b05b6" >
-					<ee:message >
-						<ee:set-payload ><![CDATA[%dw 2.0
+				<ee:transform doc:name="Transform Message" doc:id="dd228ccb-06cf-49a7-97e8-08699f3311d7">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
-{ 
-	"status": "submitted"
-}]]></ee:set-payload>
+if (payload[0].success == false)
+	{ 
+		"status": "submitted"
+	}
+else
+	{ 
+		"status": "error"
+	}]]></ee:set-payload>
 					</ee:message>
 					<ee:variables >
 						<ee:set-variable variableName="httpStatus" ><![CDATA[%dw 2.0
 output application/java
 ---
-201]]></ee:set-variable>
+if (payload[0].success == false)
+	500
+else
+	201]]></ee:set-variable>
 					</ee:variables>
 				</ee:transform>
 			</when>

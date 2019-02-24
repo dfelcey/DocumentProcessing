@@ -124,9 +124,9 @@ output application/java
 {	
 	fileContents: payload.parts.file1.content as Binary,
 	keywords: payload.parts.keywords.content as String,
-	contentType: payload.parts.file1.headers.'Content-Type' as String,
+	contentType: payload.parts.contentType.content as String,
 	emailAddress: payload.parts.emailAddress.content as String,
-	filename: payload.parts.file1.headers.'Content-Disposition'.filename as String,
+	filename: payload.parts.filename.content as String,
 	language: payload.parts.language.content as String
 }]]></ee:set-payload>
             </ee:message>

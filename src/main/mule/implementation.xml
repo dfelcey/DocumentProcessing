@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:salesforce-case-attachement-api="http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api" xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
-	xmlns:online-ocrapi="http://www.mulesoft.org/schema/mule/online-ocrapi"
-	xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:salesforce-case-attachment-api="http://www.mulesoft.org/schema/mule/salesforce-case-attachment-api" xmlns:salesforce-case-attachement-api="http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api"
+	xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
+	xmlns:online-ocrapi="http://www.mulesoft.org/schema/mule/online-ocrapi" xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
 http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
@@ -10,7 +10,8 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
 http://www.mulesoft.org/schema/mule/online-ocrapi http://www.mulesoft.org/schema/mule/online-ocrapi/current/mule-online-ocrapi.xsd
 http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
-http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api/current/mule-salesforce-case-attachement-api.xsd">
+http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api/current/mule-salesforce-case-attachement-api.xsd
+http://www.mulesoft.org/schema/mule/salesforce-case-attachment-api http://www.mulesoft.org/schema/mule/salesforce-case-attachment-api/current/mule-salesforce-case-attachment-api.xsd">
 	<flow name="implementationFlow" doc:id="d8a580d2-644e-477b-a5df-341c13962301" >
 		<ee:transform doc:name="Transform Message" doc:id="13e3e453-fa89-4264-b8ed-bad7aa94a2ec">
 			<ee:message>
@@ -61,37 +62,26 @@ import * from dw::core::Binaries
 				<ee:transform doc:name="Transform Message" doc:id="f2df2195-dc45-4554-ae4f-3f5b0a463b13">
 					<ee:message>
 						<ee:set-payload><![CDATA[%dw 2.0
-output multipart/form-data
-boundary="3453563653"
+output application/xml
+ns ns0 http://validationnamespace.raml.org
+import * from dw::core::Binaries
 ---
 {
-  parts : {
-    fileName : {
-      headers : {
-        "Content-Type": "text/plain"
-      },
-      content : vars.docValues.filename
-    },
-    emaillAddress : {
-      headers : {
-        "Content-Type": "text/plain"
-      },
-      content : vars.docValues.emailAddress
-    },
-    file : {
-      headers : {
-        "Content-Disposition" : {
-            "filename": vars.docValues.filename as String
-        },
-        "Content-Type" : vars.docValues.contentType as String
-      },
-      content : vars.docValues.fileContents
-    }
-  }
+	ns0#root: {
+		ns0#file1: 
+			if (vars.docValues.fileEncoding == 'binary')
+				toBase64(vars.docValues.fileContents) as String
+			else
+				vars.docValues.fileContents as String
+		,
+		ns0#emailAddress: vars.docValues.emailAddress,
+		ns0#fileName: vars.docValues.filename,
+		ns0#fileEncoding: vars.docValues.fileEncoding
+	}
 }]]></ee:set-payload>
 					</ee:message>
 				</ee:transform>
-				<salesforce-case-attachement-api:create-attachment doc:name="Create attachment" doc:id="2d189da7-d473-4762-b194-9e7b756bb416" config-ref="Salesforce_Case_Attachement_API_Config" client-id="${secure::sfdc_service.client_id}" client-secret="${secure::sfdc_service.client_secret}"/>
+				<salesforce-case-attachment-api:create-attachment doc:name="Create attachment" doc:id="ad846307-67e5-4e3f-89da-2a9a19375aa8" config-ref="Salesforce_Case_Attachment_API_Config" client-id="${secure::sfdc_service.client_id}" client-secret="${secure::sfdc_service.client_secret}"/>
 				<ee:transform doc:name="Transform Message" doc:id="71388b58-817b-4edf-a7e6-61cf7e8b05b6" >
 					<ee:message >
 						<ee:set-payload ><![CDATA[%dw 2.0

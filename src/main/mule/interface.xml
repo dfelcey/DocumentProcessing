@@ -132,6 +132,7 @@ output application/java
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="3009ab1b-9efc-404e-8f6a-b1ecb0647ce7" message="#['File encoding: ' ++ payload.fileEncoding ++ ' and filename: ' ++ payload.filename]"/>
 		<flow-ref doc:name="Flow Reference" doc:id="1d7f3122-d790-48a8-98c0-8ca95bd440f3" name="implementationFlow" />
 		<ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" doc:id="18615aa0-0769-436e-aa69-f543704520da">
             <ee:message>

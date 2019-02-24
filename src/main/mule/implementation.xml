@@ -22,6 +22,7 @@ output application/java
 payload]]></ee:set-variable>
 			</ee:variables>
 		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="34159e8f-b7ac-41ee-96bf-584c176a01a6" message="#['File content: ' ++ vars.docValues.fileContents]"/>
 		<ee:transform doc:name="Transform Message" doc:id="98d69d3d-2aa8-4ca9-901a-381dbc5784c8" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
@@ -33,9 +34,9 @@ import * from dw::core::Binaries
 	ns0#root: {
 		ns0#file1: 
 			if (vars.docValues.fileEncoding == 'binary')
-				toBase64(vars.docValues.fileContents)
+				toBase64(vars.docValues.fileContents) as String
 			else
-				vars.docValues.fileContents
+				vars.docValues.fileContents as String
 		,
 		ns0#language: vars.docValues.language,
 		ns0#contentType: vars.docValues.contentType,
@@ -47,15 +48,16 @@ import * from dw::core::Binaries
 		</ee:transform>
 		<online-ocrapi:create-translate doc:name="Translate Document" doc:id="71d07bb1-b5b4-4bf4-abd0-da63bddf34ab" config-ref="Online_OCR_API_Config" client-id="${secure::ocr_service.client_id}" client-secret="${secure::ocr_service.client_secret}"/>
 		<set-variable value="#[lower(payload.text)]" doc:name="Set Variable" doc:id="9a62c5dc-b79f-444c-aa46-469830cb2b6e" variableName="text" />
-		<scripting:execute engine="groovy" doc:name="Match keywords against text" doc:id="e111d0b0-1efe-4cfd-8993-c19408e1c41b" >
+		<scripting:execute engine="groovy" doc:name="Match keywords against text" doc:id="e111d0b0-1efe-4cfd-8993-c19408e1c41b">
 			<scripting:code >${file::match.groovy}</scripting:code>
 			<scripting:parameters ><![CDATA[#[{
 	keywords: vars.docValues.keywords as String,
 	text: vars.text
 }]]]></scripting:parameters>
 		</scripting:execute>
+		<logger level="INFO" doc:name="Logger" doc:id="922463c3-5771-4cd3-a635-fe60ee0696aa" message="#['Check result: ' ++ (payload.result == &quot;Match&quot;) ++ ' payload is: ' ++ payload.result]"/>
 		<choice doc:name="Choice" doc:id="6bfc7436-7679-4141-8d11-8224ce631438" >
-			<when expression='#[payload == "Match"]'>
+			<when expression='#[payload.result == "Match"]'>
 				<ee:transform doc:name="Transform Message" doc:id="f2df2195-dc45-4554-ae4f-3f5b0a463b13">
 					<ee:message>
 						<ee:set-payload><![CDATA[%dw 2.0
@@ -68,7 +70,7 @@ boundary="3453563653"
       headers : {
         "Content-Type": "text/plain"
       },
-      content : vars.docValues.fileName
+      content : vars.docValues.filename
     },
     emaillAddress : {
       headers : {
@@ -79,7 +81,7 @@ boundary="3453563653"
     file : {
       headers : {
         "Content-Disposition" : {
-            "filename": vars.docValuces.filename as String
+            "filename": vars.docValues.filename as String
         },
         "Content-Type" : vars.docValues.contentType as String
       },

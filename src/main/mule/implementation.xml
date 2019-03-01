@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:salesforce-case-attachment-api="http://www.mulesoft.org/schema/mule/salesforce-case-attachment-api"
-	xmlns:salesforce-case-attachement-api="http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api"
-	xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:online-ocrapi="http://www.mulesoft.org/schema/mule/online-ocrapi" xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
-http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
-http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+<mule xmlns:salesforce-case-attachment-api="http://www.mulesoft.org/schema/mule/salesforce-case-attachment-api"
+	xmlns:online-ocrapi="http://www.mulesoft.org/schema/mule/online-ocrapi"
+	xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd 
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
-http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
 http://www.mulesoft.org/schema/mule/online-ocrapi http://www.mulesoft.org/schema/mule/online-ocrapi/current/mule-online-ocrapi.xsd
-http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
-http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api/current/mule-salesforce-case-attachement-api.xsd
-http://www.mulesoft.org/schema/mule/salesforce-case-attachment-api http://www.mulesoft.org/schema/mule/salesforce-case-attachment-api/current/mule-salesforce-case-attachment-api.xsd
-http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
-	<flow name="implementationFlow" doc:id="d8a580d2-644e-477b-a5df-341c13962301" >
-		<ee:transform doc:name="Transform Message" doc:id="13e3e453-fa89-4264-b8ed-bad7aa94a2ec">
-			<ee:message>
-			</ee:message>
+http://www.mulesoft.org/schema/mule/salesforce-case-attachment-api http://www.mulesoft.org/schema/mule/salesforce-case-attachment-api/current/mule-salesforce-case-attachment-api.xsd">
+	<flow name="implementationFlow" doc:id="a9444326-d157-4fb4-8ace-40dccb409864" >
+		<ee:transform doc:name="Transform Message" doc:id="95ecb3b3-0099-4df1-8708-ed59dad863aa">
 			<ee:variables>
 				<ee:set-variable variableName="docValues"><![CDATA[%dw 2.0
 output application/java
@@ -24,8 +19,8 @@ output application/java
 payload]]></ee:set-variable>
 			</ee:variables>
 		</ee:transform>
-		<logger level="INFO" doc:name="Logger" doc:id="34159e8f-b7ac-41ee-96bf-584c176a01a6" message="#['File name: ' ++ vars.docValues.filename]"/>
-		<ee:transform doc:name="Transform Message" doc:id="98d69d3d-2aa8-4ca9-901a-381dbc5784c8" >
+		<logger level="INFO" doc:name="Logger" doc:id="ee4279cd-b778-43c2-954a-2b0658a61825" message="#['File name: ' ++ vars.docValues.filename]"/>
+		<ee:transform doc:name="Transform Message" doc:id="b389cc1e-89ac-42b1-848d-37c258c52615" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/xml
@@ -48,25 +43,24 @@ import * from dw::core::Binaries
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<online-ocrapi:create-translate doc:name="Translate Document" doc:id="71d07bb1-b5b4-4bf4-abd0-da63bddf34ab" config-ref="Online_OCR_API_Config" client-id="${secure::ocr_service.client_id}" client-secret="${secure::ocr_service.client_secret}"/>
-		<set-variable value="#[lower(payload.text)]" doc:name="Set Variable" doc:id="9a62c5dc-b79f-444c-aa46-469830cb2b6e" variableName="text" />
-		<tracking:custom-event doc:name="Check if match" doc:id="d8145378-9fdc-40eb-b727-8768509c559d" event-name="Check if match">
-			<tracking:meta-data key="Step - Check if match" />
+		<online-ocrapi:create-translate doc:name="Create translate" doc:id="d019cb65-2f5b-4ee3-893e-13487f51a50f" config-ref="Online_OCR_API_Config" client-id="${secure::ocr_service.client_id}" client-secret="${secure::ocr_service.client_secret}" />
+		<set-variable value="#[lower(payload.text)]" doc:name="Set Variable" doc:id="fc27828d-e75a-4ec2-b806-1b2e6867365d" variableName="text"/>
+		<tracking:custom-event doc:name="Check if match" doc:id="3ee4f859-252e-453c-a5c3-e9f7d6e5adcc" event-name="Check if match">
 			<tracking:meta-data key="Text" value="#[vars.text]" />
+			<tracking:meta-data key="Step - checking if match" value="Step - checking if match" />
 			<tracking:meta-data key="Keywords" value="#[vars.docValues.keywords]" />
-			<tracking:meta-data key="File Name" value="#[vars.docValues.filename]" />
 		</tracking:custom-event>
-		<scripting:execute engine="groovy" doc:name="Match keywords against text" doc:id="e111d0b0-1efe-4cfd-8993-c19408e1c41b">
+		<scripting:execute engine="groovy" doc:name="Match keywords against text" doc:id="3cfbbdce-3513-4eac-8c8b-7d415b7b2658" >
 			<scripting:code >${file::match.groovy}</scripting:code>
-			<scripting:parameters ><![CDATA[#[{
+						<scripting:parameters ><![CDATA[#[{
 	keywords: vars.docValues.keywords as String,
 	text: vars.text
 }]]]></scripting:parameters>
 		</scripting:execute>
-		<logger level="INFO" doc:name="Logger" doc:id="922463c3-5771-4cd3-a635-fe60ee0696aa" message="#['Check result: ' ++ (payload.result == &quot;Match&quot;) ++ ' payload is: ' ++ payload.result]"/>
-		<choice doc:name="Choice" doc:id="6bfc7436-7679-4141-8d11-8224ce631438" >
+		<logger level="INFO" doc:name="Logger" doc:id="7c0ea3c8-0173-450b-aac4-c76bdaa4f75a" message="#['Check result: ' ++ (payload.result == 'Match') ++ ' payload is: ' ++ payload.result]"/>
+		<choice doc:name="Choice" doc:id="de562b81-edd1-4083-814f-7a8d590bf63a" >
 			<when expression='#[payload.result == "Match"]'>
-				<ee:transform doc:name="Transform Message" doc:id="f2df2195-dc45-4554-ae4f-3f5b0a463b13">
+				<ee:transform doc:name="Transform Message" doc:id="71c9fe1e-e4bb-4202-bf62-ac6156cd5013">
 					<ee:message>
 						<ee:set-payload><![CDATA[%dw 2.0
 output application/xml
@@ -88,8 +82,8 @@ import * from dw::core::Binaries
 }]]></ee:set-payload>
 					</ee:message>
 				</ee:transform>
-				<salesforce-case-attachment-api:create-attachment doc:name="Create attachment" doc:id="ad846307-67e5-4e3f-89da-2a9a19375aa8" config-ref="Salesforce_Case_Attachment_API_Config" client-id="${secure::sfdc_service.client_id}" client-secret="${secure::sfdc_service.client_secret}"/>
-				<ee:transform doc:name="Transform Message" doc:id="dd228ccb-06cf-49a7-97e8-08699f3311d7">
+				<salesforce-case-attachment-api:create-attachment doc:name="Create attachment" doc:id="43609e3d-128a-4a35-9e38-ec72c6ea0a67" config-ref="Salesforce_Case_Attachment_API_Config" client-id="${secure::sfdc_service.client_id}" client-secret="${secure::sfdc_service.client_secret}" />
+				<ee:transform doc:name="Transform Message" doc:id="b424939a-841a-48fa-bfc5-e80a99e5049c">
 					<ee:message>
 						<ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -107,8 +101,8 @@ output application/java
 				</ee:transform>
 			</when>
 			<otherwise >
-				<logger level="INFO" doc:name="Logger" doc:id="d70ba45d-dc92-4c5d-af7a-8f90c2d70478" message="#[payload]"/>
-				<ee:transform doc:name="Transform Message" doc:id="0a2a7e23-1fc0-4447-86e3-8e7ab31a2686" >
+				<logger level="INFO" doc:name="Logger" doc:id="ee889b58-cee5-4f9e-b7aa-50ea4db9bea2" message="#[payload]"/>
+				<ee:transform doc:name="Transform Message" doc:id="fcb72ebd-db06-409f-976d-e24844a365f4" >
 					<ee:message >
 						<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
@@ -126,10 +120,5 @@ output application/java
 				</ee:transform>
 			</otherwise>
 		</choice>
-		<error-handler >
-			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="08d93f89-6310-4ad1-9f20-2bddcadc6db7" >
-				<logger level="INFO" doc:name="Logger" doc:id="03c6dff9-2ce5-47ef-be8b-2db0e453c6c6" message="Error: #[error.description], Payload: #[payload]"/>
-			</on-error-propagate>
-		</error-handler>
 	</flow>
 </mule>

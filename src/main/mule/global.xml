@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:salesforce-case-attachment-api="http://www.mulesoft.org/schema/mule/salesforce-case-attachment-api" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
-	xmlns:salesforce-case-attachement-api="http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api"
-	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:online-ocrapi="http://www.mulesoft.org/schema/mule/online-ocrapi" xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
-http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
-http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
-http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
-http://www.mulesoft.org/schema/mule/online-ocrapi http://www.mulesoft.org/schema/mule/online-ocrapi/current/mule-online-ocrapi.xsd
-http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
-http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api http://www.mulesoft.org/schema/mule/salesforce-case-attachement-api/current/mule-salesforce-case-attachement-api.xsd
+<mule xmlns:salesforce-case-attachment-api="http://www.mulesoft.org/schema/mule/salesforce-case-attachment-api" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:online-ocrapi="http://www.mulesoft.org/schema/mule/online-ocrapi"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/online-ocrapi http://www.mulesoft.org/schema/mule/online-ocrapi/current/mule-online-ocrapi.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/salesforce-case-attachment-api http://www.mulesoft.org/schema/mule/salesforce-case-attachment-api/current/mule-salesforce-case-attachment-api.xsd">
-	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e89ba86b-d643-45c5-9d8f-e28e28816ec8">
-		<http:listener-connection host="${secure::http.host}" port="${secure::http.port}" />
-	</http:listener-config>
-	<online-ocrapi:config name="Online_OCR_API_Config" doc:name="Online OCR API Config" doc:id="05c2cc45-07fb-4aa7-8dbe-49ca4812d9b9" property_host="${secure::ocr_service.host}" property_port="${secure::ocr_service.port}" property_protocol="${secure::ocr_service.protocol}" property_basePath="${secure::ocr_service.base_path}" />
-	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="ef001b78-83b7-4d93-ae30-4aa87b6a83cd" file="config.yaml" key="${config.key}" >
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="9f18db0d-c572-48d4-b957-c35e2682be0b"  file="config.yaml" key="${config.key}" >
 		<secure-properties:encrypt algorithm="Blowfish" />
 	</secure-properties:config>
-	<global-property doc:name="Global Property" doc:id="e57b9738-9ab8-4134-b567-574b16793d35" name="defaultResponseTimeout" value="30000" />
-	<api-gateway:autodiscovery apiId="15599917" doc:name="API Autodiscovery" doc:id="68eb7e57-6bdf-4e52-ab07-073c51cdc18b" flowRef="document-processing-api-main"/>
-	<salesforce-case-attachment-api:config name="Salesforce_Case_Attachment_API_Config" doc:name="Salesforce Case Attachment API Config" doc:id="0801b156-5540-480f-84e6-1a436542f8ce" property_host="${secure::sfdc_service.host}" property_port="${secure::sfdc_service.port}" property_protocol="${secure::sfdc_service.protocol}" property_basePath="${secure::sfdc_service.base_path}" />
-	</mule>
+	<api-gateway:autodiscovery apiId="15599917" doc:name="API Autodiscovery" doc:id="1002ba85-6a8a-4b7b-ba0d-971d149814e6" flowRef="document-processing-api-main"/>
+	<online-ocrapi:config name="Online_OCR_API_Config" doc:name="Online OCR API Config" doc:id="a5f39a88-4dcf-4d66-9223-f392a0465b85" property_host="${secure::ocr_service.host}" property_port="${secure::ocr_service.port}" property_protocol="${secure::ocr_service.protocol}" property_basePath="${secure::ocr_service.base_path}" />
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="628a4ec5-ddb7-40ae-a5cc-937647cac571" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<salesforce-case-attachment-api:config name="Salesforce_Case_Attachment_API_Config" doc:name="Salesforce Case Attachment API Config" doc:id="cc160fd1-ad42-4354-99c2-486efa71a70b" property_host="${secure::sfdc_service.host}" property_port="${secure::sfdc_service.port}" property_protocol="${secure::sfdc_service.protocol}" property_basePath="${secure::sfdc_service.base_path}" />
+	<global-property doc:name="Global Property" doc:id="a662cb86-b8c0-42b6-9e1d-dbff3d781d71" name="defaultResponseTimeout" value="30000" />
+</mule>

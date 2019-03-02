@@ -18,4 +18,5 @@ http://www.mulesoft.org/schema/mule/salesforce-case-attachment-api http://www.mu
 	</http:listener-config>
 	<salesforce-case-attachment-api:config name="Salesforce_Case_Attachment_API_Config" doc:name="Salesforce Case Attachment API Config" doc:id="cc160fd1-ad42-4354-99c2-486efa71a70b" property_host="${secure::sfdc_service.host}" property_port="${secure::sfdc_service.port}" property_protocol="${secure::sfdc_service.protocol}" property_basePath="${secure::sfdc_service.base_path}" />
 	<global-property doc:name="Global Property" doc:id="a662cb86-b8c0-42b6-9e1d-dbff3d781d71" name="defaultResponseTimeout" value="30000" />
+	<configuration-properties doc:name="Configuration properties" doc:id="b6ed05a9-c216-41c4-ad94-7c1daaae13da" file="config.yaml" />
 </mule>

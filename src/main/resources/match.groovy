@@ -17,7 +17,7 @@ if(text == null || text.trim().isEmpty() || keywords == null || keywords.trim().
     }.sort { -it.get(1) }.first().get(1)
   }
 
-  result = total / words.size() > 0.90 ? "Match" : "No match"
+  result = total / words.size() > accuracy ? "Match" : "No match"
 }
 
 payload = "{ \"result\": \"" + result + "\" }"

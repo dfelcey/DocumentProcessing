@@ -47,14 +47,15 @@ import * from dw::core::Binaries
 		<set-variable value="#[lower(payload.text)]" doc:name="Set Variable" doc:id="fc27828d-e75a-4ec2-b806-1b2e6867365d" variableName="text"/>
 		<tracking:custom-event doc:name="Check if match" doc:id="3ee4f859-252e-453c-a5c3-e9f7d6e5adcc" event-name="Check if match">
 			<tracking:meta-data key="Text" value="#[vars.text]" />
-			<tracking:meta-data key="Step - checking if match" value="Step - checking if match" />
-			<tracking:meta-data key="Keywords" value="#[vars.docValues.keywords]" />
+			<tracking:meta-data key="Step" value="Checking if match" />
+			<tracking:meta-data key="Keywords" value="#[vars.docValues.keywords as String]" />
 		</tracking:custom-event>
 		<scripting:execute engine="groovy" doc:name="Match keywords against text" doc:id="3cfbbdce-3513-4eac-8c8b-7d415b7b2658" >
 			<scripting:code >${file::match.groovy}</scripting:code>
 						<scripting:parameters ><![CDATA[#[{
 	keywords: vars.docValues.keywords as String,
-	text: vars.text
+	text: vars.text,
+	accuracy: p('match.accuracy') as String { format: '#.##' } as Number
 }]]]></scripting:parameters>
 		</scripting:execute>
 		<logger level="INFO" doc:name="Logger" doc:id="7c0ea3c8-0173-450b-aac4-c76bdaa4f75a" message="#['Check result: ' ++ (payload.result == 'Match') ++ ' payload is: ' ++ payload.result]"/>

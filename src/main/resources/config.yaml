@@ -17,3 +17,5 @@ sfdc_service:
   base_path: "![fB+PP71ZnnM=]"
   client_id: "![kmABVwFJ4uaQWJlsh8UNS6CIJbw1II9YrLB2uLXzWXl98AEeOiCBNQ==]"
   client_secret: "![0/l0wh0dJWwzt+9sRn1rfR7PSzcnODiqv1UJ224o/5F602HD18gtcA==]"
+match:
+  accuracy: "0.70"
